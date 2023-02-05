@@ -21,8 +21,13 @@ jobs:
 
       - name: Setup SSH key
         run: |
-          echo "$KEY" | tr -d '\r' | ssh-add -
+          apk add openssh-client
+          apk add curl
+          eval $(ssh-agent -s)
+          echo "SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add s-
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
 
       - name: Deploy code
         run: |
-          ssh $USERNAME@$HOST "cd /var/www/jira/frontend && git pull origin main"
+          ssh -o StrictHostKeyChecking=no $USERNAME@HOST "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"

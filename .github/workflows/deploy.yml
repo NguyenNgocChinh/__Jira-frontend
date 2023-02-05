@@ -27,4 +27,4 @@ jobs:
 
       - name: Deploy code
         run: |
-          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"
+          ssh -o StrictHostKeyChecking=no root@ "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"

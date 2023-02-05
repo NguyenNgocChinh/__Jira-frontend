@@ -6,9 +6,8 @@ on:
       - master
 
 env:
-  HOST: ${{ secrets.SSH_HOST }}
-  USERNAME: ${{ secrets.SSH_USERNAME }}
-  PASSWORD: ${{ secrets.SSH_PASSWORD }}
+  SSH_HOST: ${{ secrets.SSH_HOST }}
+  SSH_USER: ${{ secrets.SSH_USERNAME }}
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 jobs:
@@ -18,6 +17,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Configure SSH
+        run: |
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ssh_private_key
+          chmod 600 ssh_private_key
+          eval $(ssh-agent -s)
+          ssh-add ssh_private_key
+
       - name: Deploy code
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_PASSWORD }} "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"
+          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"

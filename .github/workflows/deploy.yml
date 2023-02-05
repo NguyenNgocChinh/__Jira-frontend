@@ -9,6 +9,7 @@ env:
   SSH_HOST: ${{ secrets.SSH_HOST }}
   SSH_USER: ${{ secrets.SSH_USERNAME }}
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  SSH_MY_PASSPHRASE: ${{ secrets.SSH_MY_PASSPHRASE }}
 
 jobs:
   deploy:
@@ -23,6 +24,11 @@ jobs:
           chmod 600 ssh_private_key
           eval $(ssh-agent -s)
           ssh-add ssh_private_key
+
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ssh_private_key
+          chmod 600 ssh_private_key
+          eval $(ssh-agent -s)
+          echo "$SSH_MY_PASSPHRASE" | ssh-add ssh_private_key
 
       - name: Deploy code
         run: |

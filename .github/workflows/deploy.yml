@@ -25,6 +25,9 @@ jobs:
           eval $(ssh-agent -s)
           echo "$SSH_MY_PASSPHRASE" | ssh-add ssh_private_key
 
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+
       - name: Deploy code
         run: |
           ssh -o StrictHostKeyChecking=no root@207.148.125.2 "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"

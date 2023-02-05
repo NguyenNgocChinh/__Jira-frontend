@@ -42,9 +42,4 @@ jobs:
           TARGET: "/var/www/jira/frontend"
           EXCLUDE: "/dist/, /node_modules/"
           SCRIPT_BEFORE: |
-            whoami
-            ls -al
-          SCRIPT_AFTER: |
-            whoami
-            ls -al
-            echo $RSYNC_STDOUT
+            ls

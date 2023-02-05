@@ -4,37 +4,21 @@ on:
   push:
     branches:
       - master
-
-env:
-  SSH_HOST: ${{ secrets.SSH_HOST }}
-  SSH_USER: ${{ secrets.SSH_USERNAME }}
-  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
+      
 jobs:
   deploy:
     runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [ 12.x, 14.x ]
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install npm dependencies
-        run: npm install
-
-      - name: Run build task
-        run: npm run build --if-present
-
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SOURCE: "dist/"
-          ARGS: >-
-            -rltgoDzvO
-            --exclude='.git'
-            --exclude='node_modules/'
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USERNAME }}
-          TARGET: "/var/www/jira/frontend"
-          EXCLUDE: "/dist/, /node_modules/"
-          SCRIPT_BEFORE: |
-            ls
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - run: yarn build
+      - run: yarn test

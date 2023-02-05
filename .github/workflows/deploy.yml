@@ -9,7 +9,7 @@ env:
   SSH_HOST: ${{ secrets.SSH_HOST }}
   SSH_USER: ${{ secrets.SSH_USERNAME }}
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  SSH_MY_PASSPHRASE: ${{ secrets.SSH_MY_PASSPHRASE }}
+  TARGET: '/var/www/jira/frontend'
 
 jobs:
   deploy:
@@ -18,13 +18,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Configure SSH
-        run: |
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ssh_private_key
-          chmod 600 ssh_private_key
-          eval $(ssh-agent -s)
-          echo "$SSH_MY_PASSPHRASE" | ssh-add ssh_private_key
+      - name: Install npm dependencies
+        run: npm install
 
-      - name: Deploy code
-        run: |
-          ssh -o StrictHostKeyChecking=no root@207.148.125.2 "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"
+      - name: Run build task
+        run: npm run build --if-present
+
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: $SSH_HOST
+          REMOTE_USER: $SSH_USER
+          TARGET: $TARGET
+          EXCLUDE: "/dist/, /node_modules/"

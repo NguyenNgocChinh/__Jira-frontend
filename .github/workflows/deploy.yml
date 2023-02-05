@@ -23,11 +23,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ssh_private_key
           chmod 600 ssh_private_key
           eval $(ssh-agent -s)
-          ssh-add ssh_private_key
-
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ssh_private_key
-          chmod 600 ssh_private_key
-          eval $(ssh-agent -s)
           echo "$SSH_MY_PASSPHRASE" | ssh-add ssh_private_key
 
       - name: Deploy code

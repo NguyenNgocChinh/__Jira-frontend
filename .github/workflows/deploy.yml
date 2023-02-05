@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: sudo rm -f package-lock.json
+      - run: rm -f package-lock.json
       - run: npm install
       - run: npm run build

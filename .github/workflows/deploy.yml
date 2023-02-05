@@ -33,4 +33,6 @@ jobs:
 
       - name: Deploy code
         run: |
-          ssh -o StrictHostKeyChecking=no $USERNAME@HOST "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"
+          echo "username: " ${{ secrets.SSH_USERNAME }}
+          echo "password: " ${{ secrets.SSH_PASSWORD }}
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_PASSWORD }} "cd /var/www/jira/frontend && rm -rf package-lock.json && git pull && bash scripts/deploy.sh"

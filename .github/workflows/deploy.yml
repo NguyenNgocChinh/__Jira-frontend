@@ -12,13 +12,9 @@ env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
+  build:
+    runs-on: alpine
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Setup SSH key
         run: |
           apk add openssh-client
@@ -27,6 +23,13 @@ jobs:
           echo "SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add s-
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Deploy code
         run: |

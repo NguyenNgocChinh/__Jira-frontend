@@ -1,0 +1,20 @@
+.ant-layout-footer {
+  height: 55px;
+}
+
+.img-footer {
+  position: absolute;
+  bottom: 0;
+  width: 455px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.img-footer-left {
+  left: 0;
+}
+
+.img-footer-right {
+  right: 0;
+}

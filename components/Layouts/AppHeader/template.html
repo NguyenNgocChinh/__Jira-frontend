@@ -1,0 +1,18 @@
+<header class="header">
+  <a-row justify="space-between" type="flex">
+    <NuxtLink class="logo-block flex items-center" to="/">
+      <nuxt-img
+        sizes="lg:35px"
+        src="/images/bug.png"
+      />
+      <span class="logo-text">TASK MANAGEMENT</span>
+    </NuxtLink>
+    <div class="flex align-center gap-4">
+      <AppLanguage/>
+      <NuxtLink class="link-center" to="/login">
+        <a-icon type="login"/>
+        {{ $t("login") }}
+      </NuxtLink>
+    </div>
+  </a-row>
+</header>

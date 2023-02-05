@@ -1,0 +1,9 @@
+<a-select
+  ref="select-language"
+  v-model:value="$i18n.locale"
+  style="width: 120px"
+  @change="handleChange"
+  :options="availableLanguage"
+  size="small"
+  class="self-center"
+/>

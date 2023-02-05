@@ -1,0 +1,18 @@
+.logo-text {
+  /*
+  color: #caebfb;
+  */
+  color: #2eaff0;
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-size: 18px;
+}
+
+.header {
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  padding: 10px 50px;
+}

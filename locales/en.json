@@ -1,0 +1,26 @@
+{
+  "welcome": "welcome",
+  "login": "log in",
+  "Username": "Username",
+  "Password": "Password",
+  "Must be login": "Must be login",
+  "loginPage": {
+    "notLogin": "Can't access your account?",
+    "Username": "Username"
+  },
+  "messages": {
+    "required": "Please input",
+    "number": "Must be a number",
+    "phoneNumber": "Please enter the valid phone number",
+    "invalid": "Invalid",
+    "dateInTheFuture": "The date must be in the future",
+    "dateInThePast": "The date must be in the past",
+    "inValidateTime": "Invalid time",
+    "inValidateDate": "Invalid date",
+    "compareDate": "Start date must be less than or equal to end date",
+    "maxNumber": "Please enter max of {target} for {field}",
+    "minNumber": "Please enter min of {target} for {field}",
+    "maxLength": "Please enter max of {target} characters for {field}",
+    "positiveNumber": "Please enter positive number for {field}"
+  }
+}

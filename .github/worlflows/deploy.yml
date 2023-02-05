@@ -1,0 +1,28 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  HOST: ${{ secrets.SSH_HOST }}
+  USERNAME: ${{ secrets.SSH_USERNAME }}
+  PASSWORD: ${{ secrets.SSH_PASSWORD }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH key
+        run: |
+          echo "$KEY" | tr -d '\r' | ssh-add -
+
+      - name: Deploy code
+        run: |
+          ssh $USERNAME@$HOST "cd /var/www/jira/frontend && git pull origin main"

@@ -1,0 +1,13 @@
+{
+  "welcome": "Xin chào",
+  "login": "Đăng nhập",
+  "Username": "Tên đăng nhập",
+  "Password": "Mật khẩu",
+  "Must be login": "Đăng nhập để tiếp tục",
+  "loginPage": {
+    "notLogin": "Không thể đăng nhập vào tài khoản của bạn?"
+  },
+  "messages": {
+    "required": "Vui lòng nhập"
+  }
+}
